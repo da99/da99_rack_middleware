@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# -*- bash -*-
+#
+#
+set -u -e -o pipefail
+
+JAR="tmp/cookies.txt"
+mkdir -p tmp
+touch $JAR
+
+#
+# Example
+#    bin/get -w "%{http_code}" "http://www.google.com"
+#
+curl \
+  --cookie-jar $JAR            \
+  --cookie     $JAR            \
+  -s                           \
+  -o /dev/null                 \
+  $@
+
+
