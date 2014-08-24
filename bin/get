@@ -21,6 +21,6 @@ curl \
   --cookie     $JAR            \
   -s                           \
   $opts                        \
-  $@
+  "$@"
 
 
