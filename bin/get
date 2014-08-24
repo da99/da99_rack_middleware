@@ -4,9 +4,7 @@
 #
 set -u -e -o pipefail
 
-JAR="tmp/cookies.txt"
-mkdir -p tmp
-touch $JAR
+source bin/env
 
 #
 # Example

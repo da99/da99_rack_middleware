@@ -4,30 +4,19 @@
 #
 set -u -e -o pipefail
 
-JAR="tmp/cookies.txt"
-pid="tmp/thin.pid"
-log="tmp/log.txt"
-cmd="bundle exec thin -d -l $log -P $pid -p 4567 -e production -R specs/helpers/config.ru"
+source bin/env
 
 
 # === Stop the server at the end
-trap "$cmd stop" EXIT
+trap "bin/server stop" EXIT
 
 # === Stop the current server, if found.
-if [[ -f "$pid" && -s "$pid" ]]
-then
-  $cmd stop
-fi
-
-# === Reset tmp files
-rm -f "$pid"
-rm -f "$log"
-echo '' > "$JAR"
+bin/server stop
 
 
 # === Start server:
 echo "Starting server..."
-$cmd start
+bin/server start
 
 # === Finally, run the tests.
 files="$(find specs/ -maxdepth 1 -type f -iname "*.rb" -and -not -iname "helpers.rb")"
