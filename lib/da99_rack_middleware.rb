@@ -1,13 +1,16 @@
 
+require 'rack/protection'
 
 class Da99_Rack_Middleware
 
-  dir   = File.expand_path(File.dir(__FILE__) + '/da99_rack_middleware')
+  dir   = File.expand_path(File.dirname(__FILE__) + '/da99_rack_middleware')
   files = Dir.glob(dir + '/*.rb').sort
   Names = files.map { |file|
     base = File.basename(file).sub('.rb', '')
     require "da99_rack_middleware/#{base}"
-    base.split('_').shift.join('_').to_sym
+    pieces = base.split('_')
+    pieces.shift
+    pieces.join('_').to_sym
   }
 
   def initialize main_app
@@ -18,7 +21,6 @@ class Da99_Rack_Middleware
       use Rack::Protection
 
       if ENV['IS_DEV']
-        use Rack::CommonLogger
         use Rack::ShowExceptions
       end
 
