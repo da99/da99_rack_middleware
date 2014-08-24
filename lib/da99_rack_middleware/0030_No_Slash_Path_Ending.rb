@@ -3,6 +3,7 @@ class Da99_Rack_Middleware
 
     METHODS = ['HEAD', 'GET']
     LAST_SLASH = /\/$/
+    SLASH = '/'
 
     def initialize new_app
       @app = new_app
@@ -12,9 +13,9 @@ class Da99_Rack_Middleware
 
       ext = File.extname(new_env['PATH_INFO'])
       remove_slash = begin
-                       new_env['PATH_INFO'] != '/'.freeze &&
+                       new_env['PATH_INFO'] != SLASH &&
                          METHODS.include?(new_env['REQUEST_METHOD']) &&
-                         new_env['PATH_INFO'][-1,1] == '/' &&
+                         new_env['PATH_INFO'][-1,1] == SLASH &&
                          ext === ''
                      end
 
