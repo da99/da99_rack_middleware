@@ -8,20 +8,28 @@ JAR="tmp/cookies.txt"
 pid="tmp/thin.pid"
 log="tmp/log.txt"
 cmd="bundle exec thin -d -l $log -P $pid -p 4567 -e production -R specs/helpers/config.ru"
+
+
+# === Stop the server at the end
+trap "$cmd stop" EXIT
+
+# === Stop the current server, if found.
 if [[ -f "$pid" && -s "$pid" ]]
 then
   $cmd stop
-else
-  rm -f "$pid"
-  rm -f "$log"
 fi
 
-trap "$cmd stop" EXIT
-
+# === Reset tmp files
+rm -f "$pid"
+rm -f "$log"
 echo '' > "$JAR"
+
+
+# === Start server:
 echo "Starting server..."
 $cmd start
 
+# === Finally, run the tests.
 files="$(find specs/ -maxdepth 1 -type f -iname "*.rb" -and -not -iname "helpers.rb")"
 if [[ -z "$files" ]]; then
   colorize yellow "No tests found." 1>&2
