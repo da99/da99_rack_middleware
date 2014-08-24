@@ -1,5 +1,5 @@
 
-describe "da99_rack_middleware" do
+describe Da99_Rack_Middleware do
 
   it "runs" do
     get(:http_code, '/').should == 200
@@ -7,14 +7,16 @@ describe "da99_rack_middleware" do
 
 end # === describe da99_rack_middleware ===
 
-describe Allow_Only_Roman_Uri do
+describe Da99_Rack_Middleware::Allow_Only_Roman_Uri do
 
-  it "returns 404 if uri has non-roman chars" do
-    get(:http_code, '/**').should == 404
+  it "returns 400 if uri has non-roman chars" do
+    get(:http_code, '/()/').should == 400
   end
 
   it "output 'Invalid chars' in content" do
-    get(:output, '/**')['Invalid chars'].should == 'Invalid chars'
+    get(:output, '/()/').should.match /Invalid chars/
   end
 
 end # === describe Allow_Only_Roman_Uri
+
+

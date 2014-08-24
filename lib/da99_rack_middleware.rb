@@ -3,6 +3,8 @@ require 'rack/protection'
 
 class Da99_Rack_Middleware
 
+  DA99 = self
+
   dir   = File.expand_path(File.dirname(__FILE__) + '/da99_rack_middleware')
   files = Dir.glob(dir + '/*.rb').sort
   Names = files.map { |file|
@@ -40,7 +42,7 @@ class Da99_Rack_Middleware
       end
 
       Names.each { |name|
-        use Object.const_get(name)
+        use Da99_Rack_Middleware.const_get(name)
       }
 
       run main_app

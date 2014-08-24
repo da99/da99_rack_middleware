@@ -6,6 +6,12 @@ set -u -e -o pipefail
 
 source bin/env
 
+opts=""
+if [[ "$@" == *-w* ]]
+then
+  opts="$opts -o /dev/null "
+fi
+
 #
 # Example
 #    bin/get -w "%{http_code}" "http://www.google.com"
@@ -14,7 +20,7 @@ curl \
   --cookie-jar $JAR            \
   --cookie     $JAR            \
   -s                           \
-  -o /dev/null                 \
+  $opts                        \
   $@
 
 
