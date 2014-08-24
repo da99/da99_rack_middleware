@@ -11,9 +11,12 @@ class Da99_Rack_Middleware
     def call new_env
 
       ext = File.extname(new_env['PATH_INFO'])
-      remove_slash = (METHODS.include?(new_env['REQUEST_METHOD']) &&
-                      new_env['PATH_INFO'][-1,1] == '/' &&
-                      ext === '')
+      remove_slash = begin
+                       new_env['PATH_INFO'] != '/'.freeze &&
+                         METHODS.include?(new_env['REQUEST_METHOD']) &&
+                         new_env['PATH_INFO'][-1,1] == '/' &&
+                         ext === ''
+                     end
 
       return(@app.call( new_env )) unless remove_slash
 

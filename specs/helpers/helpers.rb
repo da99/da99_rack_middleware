@@ -9,6 +9,8 @@ def get var, path
   case var
   when :http_code
     `bin/get -w "%{#{var}}" "#{url}"`.strip.to_i
+  when :redirect_url
+    `bin/get -w "%{#{var}}" "#{url}"`.strip
   when :output
     `bin/get                "#{url}"`
   else
