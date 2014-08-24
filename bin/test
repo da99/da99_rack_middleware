@@ -10,10 +10,6 @@ source bin/env
 # === Stop the server at the end
 trap "bin/server stop" EXIT
 
-# === Stop the current server, if found.
-bin/server stop
-
-
 # === Start server:
 echo "Starting server..."
 bin/server start

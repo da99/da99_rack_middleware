@@ -20,7 +20,6 @@ then
   rm -f "$PID"
   rm -f "$LOG"
   echo '' > "$JAR"
-  echo "Starting server: PORT: $PORT"
 fi
 
 if [[ "$1" == "stop" && ! -f "$PID" ]]
@@ -34,7 +33,7 @@ bundle exec thin -d -l $LOG -P $PID -p $PORT -e production -R specs/helpers/conf
 if [[ "$@" == *start* ]]
 then
   sleep 0.5
-  echo "PID: $(cat $PID)"
+  echo "Started server: PORT: $PORT PID: $(cat $PID)"
 fi
 
 

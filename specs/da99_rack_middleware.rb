@@ -1,12 +1,18 @@
 
 def get var, path
-  `bin/get -w "%{#{var}}" "http://localhost:#{ENV['PORT']}#{path}"`.strip
+  result = `bin/get -w "%{#{var}}" "http://localhost:#{ENV['PORT']}#{path}"`.strip
+  case var
+  when :http_code
+    result.to_i
+  else
+    result
+  end
 end
 
 describe "da99_rack_middleware" do
 
   it "runs" do
-    get(:http_code, '/hello').to_i.should == 301
+    get(:http_code, '/').should == 200
   end
 
 end # === describe da99_rack_middleware ===
