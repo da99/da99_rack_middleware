@@ -17,6 +17,12 @@ class Da99_Rack_Middleware
 
   class << self
 
+    def redirect new, code = 301
+      res = Rack::Response.new
+      res.redirect new, code
+      res.finish
+    end
+
     def response code, type, raw_content
       content = raw_content.to_s
       res = Rack::Response.new

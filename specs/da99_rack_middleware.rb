@@ -19,6 +19,28 @@ describe Da99_Rack_Middleware::Allow_Only_Roman_Uri do
 
 end # === describe Allow_Only_Roman_Uri
 
+describe Da99_Rack_Middleware::Squeeze_Uri_Dots do
+
+  it "squeezes multiple dots into one" do
+    code, url = get(:redirect, '/hello.....rb')
+    code.should == 301
+    url.should.match /\/hello\.rb/
+  end
+
+  it "replaces .../ with /" do
+    code, url = get(:redirect, '/hello.../abc')
+    code.should == 301
+    url.should.match /\/hello\/abc/
+  end
+
+  it "replaces /... with /" do
+    code, url = get(:redirect, '/hello/...h')
+    code.should == 301
+    url.should.match /\/hello\/h/
+  end
+
+end # === describe Squeeze_Uri_Dots
+
 describe Da99_Rack_Middleware::No_Slash_Path_Ending do
 
   it "redirects to path with no ending slash" do
