@@ -7,9 +7,11 @@ Gem::Specification.new do |spec|
   spec.version       = `cat VERSION`
   spec.authors       = ["da99"]
   spec.email         = ["i-hate-spam-1234567@mailinator.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.summary       = %q{My personal list of rack middlewares for web apps.}
   spec.description   = %q{
-    TODO: Write a longer description. Optional.
+    Various rack middlewares I use for projects.
+    I got tired of copying/pasting the same ones for
+    different apps.
   }
   spec.homepage      = "https://github.com/da99/da99_rack_middleware"
   spec.license       = "MIT"
@@ -21,9 +23,11 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "pry"           , "~> 0.9"
-  spec.add_development_dependency "rake"          , "~> 10.3"
-  spec.add_development_dependency "bundler"       , "~> 1.5"
-  spec.add_development_dependency "bacon"         , "~> 1.0"
-  spec.add_development_dependency "Bacon_Colored" , "~> 0.1"
+  spec.add_development_dependency "pry"           , "> 0.9"
+  spec.add_development_dependency "rake"          , "> 10.3"
+  spec.add_development_dependency "bundler"       , "> 1.5"
+  spec.add_development_dependency "bacon"         , "> 1.0"
+  spec.add_development_dependency "Bacon_Colored" , "> 0.1"
+  spec.add_development_dependency "cuba" , "> 3.3"
+  spec.add_development_dependency "thing" , "> 1.6"
 end
