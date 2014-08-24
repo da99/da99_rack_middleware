@@ -8,7 +8,7 @@ source bin/env
 mkdir -p tmp
 
 # === Stop the current server, if found.
-if [[ "$@" == *start* ]]
+if [[ "$1" == "start" ]]
 then
 
   if [[ -f "$PID" && -s "$PID" ]]
@@ -21,6 +21,12 @@ then
   rm -f "$LOG"
   echo '' > "$JAR"
   echo "Starting server: PORT: $PORT"
+fi
+
+if [[ "$1" == "stop" && ! -f "$PID" ]]
+then
+  echo "No pid found. Exiting."
+  exit 0
 fi
 
 bundle exec thin -d -l $LOG -P $PID -p $PORT -e production -R specs/helpers/config.ru $@
