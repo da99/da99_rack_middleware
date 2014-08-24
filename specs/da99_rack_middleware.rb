@@ -22,8 +22,9 @@ end # === describe Allow_Only_Roman_Uri
 describe Da99_Rack_Middleware::No_Slash_Path_Ending do
 
   it "redirects to path with no ending slash" do
-    get(:http_code, '/slash/').should == 301
-    get(:redirect_url, '/slash/').should.match /\/slash$/
+    code, url = get(:redirect, '/slash/')
+    code.should == 301
+    url.should.match /\/slash$/
   end
 
 end # === describe No_Slash_Path_Ending

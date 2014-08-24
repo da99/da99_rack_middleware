@@ -11,6 +11,11 @@ def get var, path
     `bin/get -w "%{#{var}}" "#{url}"`.strip.to_i
   when :redirect_url
     `bin/get -w "%{#{var}}" "#{url}"`.strip
+  when :redirect
+    raw = `bin/get -w '%{http_code} %{redirect_url}' "#{url}"`
+    pieces = raw.strip.split
+    pieces[0] = pieces[0].to_i
+    pieces
   when :output
     `bin/get                "#{url}"`
   else
