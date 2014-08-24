@@ -11,21 +11,16 @@ cmd="bundle exec thin -d -l $log -P $pid -p 4567 -e production -R specs/helpers/
 if [[ -f "$pid" && -s "$pid" ]]
 then
   $cmd stop
+else
+  rm -f "$pid"
+  rm -f "$log"
 fi
 
+trap "$cmd stop" EXIT
+
 echo '' > "$JAR"
-touch "$pid"
 echo "Starting server..."
 $cmd start
-
-sleep 3
-cat "$pid"
-sleep 3
-cat "$pid"
-echo "$cmd"
-sleep 3
-cat "$pid"
-
 
 files="$(find specs/ -maxdepth 1 -type f -iname "*.rb" -and -not -iname "helpers.rb")"
 if [[ -z "$files" ]]; then
@@ -35,9 +30,4 @@ else
   bundle exec bacon specs/helpers/helpers.rb $files "$@"
 fi
 
-
-
-
-$cmd stop
-exit 0
 
