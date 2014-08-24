@@ -1,14 +1,4 @@
 
-def get var, path
-  result = `bin/get -w "%{#{var}}" "http://localhost:#{ENV['PORT']}#{path}"`.strip
-  case var
-  when :http_code
-    result.to_i
-  else
-    result
-  end
-end
-
 describe "da99_rack_middleware" do
 
   it "runs" do
@@ -16,3 +6,15 @@ describe "da99_rack_middleware" do
   end
 
 end # === describe da99_rack_middleware ===
+
+describe Allow_Only_Roman_Uri do
+
+  it "returns 404 if uri has non-roman chars" do
+    get(:http_code, '/**').should == 404
+  end
+
+  it "output 'Invalid chars' in content" do
+    get(:output, '/**')['Invalid chars'].should == 'Invalid chars'
+  end
+
+end # === describe Allow_Only_Roman_Uri

@@ -13,6 +13,20 @@ class Da99_Rack_Middleware
     pieces.join('_').to_sym
   }
 
+  class << self
+
+    def response code, type, raw_content
+      content = raw_content.to_s
+      res = Rack::Response.new
+      res.status = code.to_i
+      res.headers['Content-Length'] = content.bytesize.to_s
+      res.headers['Content-Type']   = 'text/plain'.freeze
+      res.body = [content]
+      res.finish
+    end
+
+  end # === class self
+
   def initialize main_app
     @app = Rack::Builder.new do
 
@@ -21,6 +35,7 @@ class Da99_Rack_Middleware
       use Rack::Protection
 
       if ENV['IS_DEV']
+        use Rack::CommonLogger
         use Rack::ShowExceptions
       end
 
