@@ -4,13 +4,40 @@
 #
 set -u -e -o pipefail
 
-bundle exec rackup specs/config.ru
-exit 0
+JAR="tmp/cookies.txt"
+pid="tmp/thin.pid"
+log="tmp/log.txt"
+cmd="bundle exec thin -d -l $log -P $pid -p 4567 -e production -R specs/helpers/config.ru"
+if [[ -f "$pid" && -s "$pid" ]]
+then
+  $cmd stop
+fi
+
+echo '' > "$JAR"
+touch "$pid"
+echo "Starting server..."
+$cmd start
+
+sleep 3
+cat "$pid"
+sleep 3
+cat "$pid"
+echo "$cmd"
+sleep 3
+cat "$pid"
+
 
 files="$(find specs/ -maxdepth 1 -type f -iname "*.rb" -and -not -iname "helpers.rb")"
 if [[ -z "$files" ]]; then
   colorize yellow "No tests found." 1>&2
   exit 0
 else
-  bundle exec bacon specs/helpers.rb $files "$@"
+  bundle exec bacon specs/helpers/helpers.rb $files "$@"
 fi
+
+
+
+
+$cmd stop
+exit 0
+
