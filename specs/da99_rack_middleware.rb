@@ -51,3 +51,12 @@ describe Da99_Rack_Middleware::No_Slash_Path_Ending do
 
 end # === describe No_Slash_Path_Ending
 
+describe Da99_Rack_Middleware::Root_Favicon_If_Not_Found do
+
+  it "redirects to /favicon.ico if deeper ico file not found." do
+    code, url = get(:redirect, '/something/favicon.ico')
+    code.should == 302
+    url.should.match /\:4567\/favicon.ico/
+  end
+
+end # === describe Root_Favicon_If_Not_Found
