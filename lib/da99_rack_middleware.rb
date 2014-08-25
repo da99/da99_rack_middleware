@@ -41,6 +41,7 @@ class Da99_Rack_Middleware
       use Rack::ContentLength
       use Rack::Session::Cookie, secret: SecureRandom.urlsafe_base64(nil, true)
       use Rack::Protection
+      use Rack::Head
 
       if ENV['IS_DEV']
         use Rack::CommonLogger
