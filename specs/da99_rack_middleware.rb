@@ -59,4 +59,12 @@ describe Da99_Rack_Middleware::Root_Favicon_If_Not_Found do
     url.should.match /\:4567\/favicon.ico/
   end
 
+  it "does not redirect /favicon.ico" do
+    get(:http_code, '/favicon.ico').should == 404
+  end
+
 end # === describe Root_Favicon_If_Not_Found
+
+
+
+
