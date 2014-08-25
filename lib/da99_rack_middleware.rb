@@ -38,6 +38,7 @@ class Da99_Rack_Middleware
   def initialize main_app
     @app = Rack::Builder.new do
 
+      use Rack::Lint
       use Rack::ContentLength
       use Rack::ContentType, "text/plain"
       use Rack::MethodOverride
