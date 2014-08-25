@@ -14,12 +14,10 @@ class Da99_Rack_Middleware
          new_env['PATH_INFO']['favicon.ico']
 
         request  = Rack::Request.new(new_env)
-        response = Rack::Response.new
         full_uri = request.url.split('/')[0,3]
 
         # Redirec to http[s]://domain.com/favicon.ico
-        response.redirect '/favicon.ico', 301 # Permanent
-        response.finish
+        DA99.redirect '/favicon.ico', 301 # Permanent
       else
         [status, headers, body]
       end
