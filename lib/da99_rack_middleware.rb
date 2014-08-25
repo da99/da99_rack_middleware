@@ -39,18 +39,19 @@ class Da99_Rack_Middleware
     @app = Rack::Builder.new do
 
       use Rack::ContentLength
+      use Rack::ContentType, "text/plain"
+      use Rack::MethodOverride
       use Rack::Session::Cookie, secret: SecureRandom.urlsafe_base64(nil, true)
       use Rack::Protection
-      use Rack::MethodOverride
+
+      Names.each { |name|
+        use Da99_Rack_Middleware.const_get(name)
+      }
 
       if ENV['IS_DEV']
         use Rack::CommonLogger
         use Rack::ShowExceptions
       end
-
-      Names.each { |name|
-        use Da99_Rack_Middleware.const_get(name)
-      }
 
       run main_app
     end
