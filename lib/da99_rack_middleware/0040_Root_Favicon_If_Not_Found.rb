@@ -1,7 +1,7 @@
 class Da99_Rack_Middleware
   class Root_Favicon_If_Not_Found
 
-    NON_ROOT_ICO = /.+\/favicon\.ico$/
+    NON_ROOT_ICO = /.+\/favicon\.ico\z/
     ROOT_ICO     = '/favicon.ico'
 
     def initialize new_app

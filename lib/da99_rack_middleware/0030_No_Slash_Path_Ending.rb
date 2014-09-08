@@ -3,7 +3,7 @@ class Da99_Rack_Middleware
 
     METHODS    = ['HEAD', 'GET']
     SLASH      = '/'
-    LAST_SLASH = /\/$/
+    LAST_SLASH = /\/\z/
 
     def initialize new_app
       @app = new_app

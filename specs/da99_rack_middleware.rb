@@ -46,7 +46,7 @@ describe Da99_Rack_Middleware::No_Slash_Path_Ending do
   it "redirects to path with no ending slash" do
     code, url = get(:redirect, '/slash/')
     code.should == 301
-    url.should.match /\/slash$/
+    url.should.match /\/slash\z/
   end
 
 end # === describe No_Slash_Path_Ending
