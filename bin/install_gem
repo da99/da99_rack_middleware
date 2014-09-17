@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# -*- bash -*-
+#
+#
+set -u -e -o pipefail
+
+name="$(basename "$(pwd)")"
+rm -f ${name}*.gem
+gem build ${name}.gemspec
+gem install ${name}-$(cat VERSION).gem
+
+
+
