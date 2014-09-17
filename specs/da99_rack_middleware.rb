@@ -65,6 +65,13 @@ describe Da99_Rack_Middleware::Root_Favicon_If_Not_Found do
 
 end # === describe Root_Favicon_If_Not_Found
 
+describe Da99_Rack_Middleware::Ensure_Host do
+
+  it "returns a 444 error if host does not match allowed hosts" do
+    get(:http_code, '/', '--header "Host: MEGA"').should == 444
+  end
+
+end # === describe Da99_Rack_Middleware::Ensure_Host ===
 
 
 

@@ -3,6 +3,7 @@ require 'rack/protection'
 
 class Da99_Rack_Middleware
 
+  HOSTS = []
   DA99 = self
 
   dir   = File.expand_path(File.dirname(__FILE__) + '/da99_rack_middleware')
@@ -16,6 +17,31 @@ class Da99_Rack_Middleware
   }
 
   class << self
+
+    def config *args
+      yield(self) if block_given?
+      case args.length
+      when 0
+        # do nothing
+
+      when 2
+
+        case args.first
+
+        when :host
+          HOSTS.concat args.last
+
+        else
+          fail "Unknown args: #{args.inspect}"
+
+        end # === case
+
+      else
+        fail "Unknown args: #{args.inspect}"
+      end # === case
+
+      self
+    end # === def config
 
     def redirect new, code = 301
       res = Rack::Response.new
