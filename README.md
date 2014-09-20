@@ -1,4 +1,4 @@
-rack\_middleware
+rack\_protect
 ===============
 
 My favorite rack middleware in one package.

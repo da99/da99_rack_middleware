@@ -3,7 +3,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "da99_rack_middleware"
+  spec.name          = "da99_rack_protect"
   spec.version       = `cat VERSION`
   spec.authors       = ["da99"]
   spec.email         = ["i-hate-spam-1234567@mailinator.com"]
@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
     I got tired of copying/pasting the same ones for
     different apps.
   }
-  spec.homepage      = "https://github.com/da99/da99_rack_middleware"
+  spec.homepage      = "https://github.com/da99/da99_rack_protect"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |file|

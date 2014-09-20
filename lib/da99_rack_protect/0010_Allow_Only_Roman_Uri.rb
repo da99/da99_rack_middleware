@@ -1,5 +1,5 @@
 
-class Da99_Rack_Middleware
+class Da99_Rack_Protect
   class Allow_Only_Roman_Uri
 
     INVALID = /[^a-zA-Z0-9\_\-\/\.\?\@\*\=]+/
@@ -19,4 +19,4 @@ class Da99_Rack_Middleware
     end
 
   end # === Allow_Only_Roman_Uri
-end # === Da99_Rack_Middleware
+end # === Da99_Rack_Protect

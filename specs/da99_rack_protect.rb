@@ -1,13 +1,13 @@
 
-describe Da99_Rack_Middleware do
+describe Da99_Rack_Protect do
 
   it "runs" do
     get(:http_code, '/').should == 200
   end
 
-end # === describe da99_rack_middleware ===
+end # === describe da99_rack_protect ===
 
-describe Da99_Rack_Middleware::Allow_Only_Roman_Uri do
+describe Da99_Rack_Protect::Allow_Only_Roman_Uri do
 
   it "returns 400 if uri has non-roman chars" do
     get(:http_code, '/()').should == 400
@@ -19,7 +19,7 @@ describe Da99_Rack_Middleware::Allow_Only_Roman_Uri do
 
 end # === describe Allow_Only_Roman_Uri
 
-describe Da99_Rack_Middleware::Squeeze_Uri_Dots do
+describe Da99_Rack_Protect::Squeeze_Uri_Dots do
 
   it "squeezes multiple dots into one" do
     code, url = get(:redirect, '/hello.....rb')
@@ -41,7 +41,7 @@ describe Da99_Rack_Middleware::Squeeze_Uri_Dots do
 
 end # === describe Squeeze_Uri_Dots
 
-describe Da99_Rack_Middleware::No_Slash_Path_Ending do
+describe Da99_Rack_Protect::No_Slash_Path_Ending do
 
   it "redirects to path with no ending slash" do
     code, url = get(:redirect, '/slash/')
@@ -51,7 +51,7 @@ describe Da99_Rack_Middleware::No_Slash_Path_Ending do
 
 end # === describe No_Slash_Path_Ending
 
-describe Da99_Rack_Middleware::Root_Favicon_If_Not_Found do
+describe Da99_Rack_Protect::Root_Favicon_If_Not_Found do
 
   it "redirects to /favicon.ico if deeper ico file not found." do
     code, url = get(:redirect, '/something/favicon.ico')
@@ -65,13 +65,13 @@ describe Da99_Rack_Middleware::Root_Favicon_If_Not_Found do
 
 end # === describe Root_Favicon_If_Not_Found
 
-describe Da99_Rack_Middleware::Ensure_Host do
+describe Da99_Rack_Protect::Ensure_Host do
 
   it "returns a 444 error if host does not match allowed hosts" do
     get(:http_code, '/', '--header "Host: MEGA"').should == 444
   end
 
-end # === describe Da99_Rack_Middleware::Ensure_Host ===
+end # === describe Da99_Rack_Protect::Ensure_Host ===
 
 
 

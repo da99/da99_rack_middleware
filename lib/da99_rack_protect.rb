@@ -1,16 +1,16 @@
 
 require 'rack/protection'
 
-class Da99_Rack_Middleware
+class Da99_Rack_Protect
 
   HOSTS = []
   DA99 = self
 
-  dir   = File.expand_path(File.dirname(__FILE__) + '/da99_rack_middleware')
+  dir   = File.expand_path(File.dirname(__FILE__) + '/da99_rack_protect')
   files = Dir.glob(dir + '/*.rb').sort
   Names = files.map { |file|
     base = File.basename(file).sub('.rb', '')
-    require "da99_rack_middleware/#{base}"
+    require "da99_rack_protect/#{base}"
     pieces = base.split('_')
     pieces.shift
     pieces.join('_').to_sym
@@ -72,7 +72,7 @@ class Da99_Rack_Middleware
       use Rack::Protection
 
       Names.each { |name|
-        use Da99_Rack_Middleware.const_get(name)
+        use Da99_Rack_Protect.const_get(name)
       }
 
       if ENV['IS_DEV']
@@ -88,4 +88,4 @@ class Da99_Rack_Middleware
     @app.call env
   end
 
-end # === class Da99_Rack_Middleware ===
+end # === class Da99_Rack_Protect ===

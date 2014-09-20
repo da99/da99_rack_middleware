@@ -1,4 +1,4 @@
-class Da99_Rack_Middleware
+class Da99_Rack_Protect
   class Squeeze_Uri_Dots
 
     DOTS_AND_SLASHES = /(\.+\/)|(\/\.+)/
@@ -20,4 +20,4 @@ class Da99_Rack_Middleware
     end
 
   end # === Squeeze_Uri_Dots
-end # === Da99_Rack_Middleware
+end # === Da99_Rack_Protect

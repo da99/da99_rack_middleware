@@ -1,7 +1,7 @@
 
 require 'Bacon_Colored'
 require 'pry'
-require 'da99_rack_middleware'
+require 'da99_rack_protect'
 
 def get var, path, append = ''
   url = "http://localhost:#{ENV['PORT']}#{path}"

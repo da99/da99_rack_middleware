@@ -1,4 +1,4 @@
-class Da99_Rack_Middleware
+class Da99_Rack_Protect
   class Root_Favicon_If_Not_Found
 
     NON_ROOT_ICO = /.+\/favicon\.ico\z/
@@ -15,4 +15,4 @@ class Da99_Rack_Middleware
     end
 
   end # === Root_Favicon_If_Not_Found
-end # === Da99_Rack_Middleware
+end # === Da99_Rack_Protect

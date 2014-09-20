@@ -1,5 +1,5 @@
 
-class Da99_Rack_Middleware
+class Da99_Rack_Protect
 
   class Ensure_Host
 
@@ -12,7 +12,7 @@ class Da99_Rack_Middleware
     end
 
     def call e
-      hosts    = Da99_Rack_Middleware::HOSTS
+      hosts    = Da99_Rack_Protect::HOSTS
       name     = e[SERVER_NAME]
       host     = e[HTT_HOST]
 
@@ -26,10 +26,10 @@ class Da99_Rack_Middleware
       is_match = host[/\A#{name}(:\d+)?\z/]
 
       return @app.call(e) if is_valid && is_match
-      Da99_Rack_Middleware.response 444, :text, 'Unknown error.'
+      Da99_Rack_Protect.response 444, :text, 'Unknown error.'
     end
 
   end # === class Ensure_Host
 
 
-end # === class Da99_Rack_Middleware
+end # === class Da99_Rack_Protect

@@ -1,8 +1,8 @@
 
 require 'cuba'
-require 'da99_rack_middleware'
+require 'da99_rack_protect'
 
-Cuba.use Da99_Rack_Middleware.config { |c|
+Cuba.use Da99_Rack_Protect.config { |c|
   c.config :host, [:localhost, 'da99_sample.com']
 }
 

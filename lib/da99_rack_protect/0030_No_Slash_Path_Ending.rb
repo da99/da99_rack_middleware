@@ -1,4 +1,4 @@
-class Da99_Rack_Middleware
+class Da99_Rack_Protect
   class No_Slash_Path_Ending
 
     METHODS    = ['HEAD', 'GET']
@@ -32,4 +32,4 @@ class Da99_Rack_Middleware
     end
 
   end # === Slashify_Path_Ending
-end # === Da99_Rack_Middleware
+end # === Da99_Rack_Protect
