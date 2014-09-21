@@ -18,17 +18,16 @@ class Da99_Rack_Protect
     File.basename(f).sub('.rb', '') 
   }.sort
 
-  Ignore_Rack_Protects = %w{ base version }
+  Ignore_Rack_Protects = %w{ base version escaped_params }
   Known_Rack_Protects = %w{
+    remote_referrer
     authenticity_token
-    escaped_params
     form_token
     frame_options
     http_origin
     ip_spoofing
     json_csrf
     path_traversal
-    remote_referrer
     remote_token
     session_hijacking
     xss_header
