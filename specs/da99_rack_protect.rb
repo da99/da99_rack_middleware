@@ -1,9 +1,29 @@
 
+RACK_PROTECTS_DIR = File.join File.dirname(`gem which rack-protection`.strip), '/rack/protection'
+RACK_PROTECTS = Dir.glob(RACK_PROTECTS_DIR + '/*').map { |f|
+  File.basename(f).sub('.rb', '') 
+}.sort
+
+
 describe Da99_Rack_Protect do
 
   it "runs" do
     get(:http_code, '/').should == 200
   end
+
+  describe 'unknown rack protect' do
+
+    before { @random_file = RACK_PROTECTS_DIR + '/random_rack_file.rb' }
+
+    after { `rm -f #{@random_file}` }
+
+    it "fails if unknown rack-protection middleware is found" do
+      `touch #{@random_file}`
+      `ruby -e "require 'da99_rack_protect'" 2>&1`.
+        should.match /Unknown rack-protection middleware: ..random_rack_file.. \(/
+    end
+
+  end # === describe
 
 end # === describe da99_rack_protect ===
 

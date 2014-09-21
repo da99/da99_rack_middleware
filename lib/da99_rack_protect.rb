@@ -3,8 +3,43 @@ require 'rack/protection'
 
 class Da99_Rack_Protect
 
-  HOSTS = []
-  DA99 = self
+  HOSTS             = []
+  DA99              = self
+
+  # =================================================================
+  #
+  # I need to know if new middleware has been added
+  # to `rack-protection` so it can be properly
+  # used (or ignored) by Da99_Rack_Protect.
+  #
+  # =================================================================
+  RACK_PROTECTS_DIR = File.join File.dirname(`gem which rack-protection`.strip), '/rack/protection'
+  RACK_PROTECTS     = Dir.glob(RACK_PROTECTS_DIR + '/*').map { |f|
+    File.basename(f).sub('.rb', '') 
+  }.sort
+
+  Ignore_Rack_Protects = %w{ base version }
+  Known_Rack_Protects = %w{
+    authenticity_token
+    escaped_params
+    form_token
+    frame_options
+    http_origin
+    ip_spoofing
+    json_csrf
+    path_traversal
+    remote_referrer
+    remote_token
+    session_hijacking
+    xss_header
+  }
+
+  Unknown_Rack_Protects = RACK_PROTECTS - Known_Rack_Protects - Ignore_Rack_Protects
+
+  if !Unknown_Rack_Protects.empty?
+    fail "Unknown rack-protection middleware: #{Unknown_Rack_Protects.inspect}"
+  end
+  # =================================================================
 
   dir   = File.expand_path(File.dirname(__FILE__) + '/da99_rack_protect')
   files = Dir.glob(dir + '/*.rb').sort
