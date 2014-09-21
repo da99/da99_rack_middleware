@@ -33,11 +33,23 @@ class Da99_Rack_Protect
     xss_header
   }
 
+  Rack_Protection_Names = {'ip_spoofing' => :IPSpoofing, 'xss_header'=>:XSSHeader}
+
   Unknown_Rack_Protects = RACK_PROTECTS - Known_Rack_Protects - Ignore_Rack_Protects
 
   if !Unknown_Rack_Protects.empty?
     fail "Unknown rack-protection middleware: #{Unknown_Rack_Protects.inspect}"
   end
+
+  require 'rack/protection/base'
+  Known_Rack_Protects.each { |name|
+    require "rack/protection/#{name}"
+    official_name = begin
+                      Rack_Protection_Names[name] ||= name.split('_').map(&:capitalize).join.to_sym
+                    end
+
+    Rack::Protection.const_get(official_name)
+  }
   # =================================================================
 
   dir   = File.expand_path(File.dirname(__FILE__) + '/da99_rack_protect')
@@ -103,7 +115,10 @@ class Da99_Rack_Protect
       use Rack::ContentType, "text/plain"
       use Rack::MethodOverride
       use Rack::Session::Cookie, secret: SecureRandom.urlsafe_base64(nil, true)
-      use Rack::Protection
+
+      Known_Rack_Protects.each { |name|
+        use Rack::Protection.const_get(Rack_Protection_Names[name])
+      }
 
       Names.each { |name|
         use Da99_Rack_Protect.const_get(name)
