@@ -11,6 +11,15 @@ describe Da99_Rack_Protect do
     get(:http_code, '/').should == 200
   end
 
+  it "does not have duplicates in Ignore_Rack_Protects, Known_Rack_Protects" do
+    (Da99_Rack_Protect::Ignore_Rack_Protects & Da99_Rack_Protect::Known_Rack_Protects).
+      should.be.empty
+  end
+
+  it "sets X-Frame-Options header to: SAMEORIGIN" do
+    get(:x_frame_options, '/').should == 'SAMEORIGIN'
+  end
+
   describe 'unknown rack protect' do
 
     before { @random_file = RACK_PROTECTS_DIR + '/random_rack_file.rb' }

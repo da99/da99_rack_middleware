@@ -8,6 +8,9 @@ def get var, path, append = ''
 
   case var
 
+  when :x_frame_options
+    `bin/get -D - -o /dev/null "#{url}" #{append}`.strip[/X-Frame-Options: (.+)$/] && ($1 || '').strip
+
   when :http_code
     `bin/get -w "%{#{var}}" "#{url}" #{append}`.strip.to_i
 
