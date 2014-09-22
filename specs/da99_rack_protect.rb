@@ -20,6 +20,10 @@ describe Da99_Rack_Protect do
     get(:x_frame_options, '/').should == 'SAMEORIGIN'
   end
 
+  it "returns ??? if browser is MSIE 6"
+  it "returns ??? if browser is MSIE 7"
+  it "returns ??? if browser is MSIE 8"
+
   describe 'unknown rack protect' do
 
     before { @random_file = RACK_PROTECTS_DIR + '/random_rack_file.rb' }

@@ -6,7 +6,9 @@ Cuba.use Da99_Rack_Protect.config { |c|
   c.config :host, [:localhost, 'da99_sample.com']
 }
 
-Cuba.use Rack::ShowExceptions
+if ENV['IS_DEV']
+  Cuba.use Rack::ShowExceptions
+end
 
 Cuba.define do
 
