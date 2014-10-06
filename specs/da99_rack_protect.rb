@@ -46,8 +46,16 @@ describe Da99_Rack_Protect::Allow_Only_Roman_Uri do
     get(:http_code, '/()').should == 400
   end
 
+  it "returns 400 if query string has invalid chars: @+" do
+    get(:http_code, '/?@+').should == 400
+  end
+
   it "output 'Invalid chars' in content" do
     get(:output, '/()').should.match /Invalid chars/
+  end
+
+  it "allows special chars in query string: /?module=allow%20(event)" do
+    get(:http_code, '/?module=allow%20(event)').should == 200
   end
 
 end # === describe Allow_Only_Roman_Uri
