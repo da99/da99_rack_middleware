@@ -3,7 +3,7 @@ class Da99_Rack_Protect
   class Allow_Only_Roman_Uri
 
     INVALID       = /[^a-zA-Z0-9\_\-\/\.\?\@\*\=]+/
-    INVALID_QUERY = /[^a-zA-Z0-9\_\-\/\.\?\@\*\=\(\)\%]+/
+    INVALID_QUERY = /[^a-zA-Z0-9\_\-\/\.\?\@\*\=\(\)\%\&]+/
 
     def initialize new_app
       @app = new_app
