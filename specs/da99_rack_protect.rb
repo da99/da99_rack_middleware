@@ -20,9 +20,20 @@ describe Da99_Rack_Protect do
     get(:x_frame_options, '/').should == 'SAMEORIGIN'
   end
 
-  it "returns ??? if browser is MSIE 6"
-  it "returns ??? if browser is MSIE 7"
-  it "returns ??? if browser is MSIE 8"
+  it "returns 400 if browser is MSIE 6" do
+    get(:http_code, '/', '--header "User-Agent: Mozilla/5.0 (Windows; U; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)"').
+      should == 400
+  end
+
+  it "returns 400 if browser is MSIE 7" do
+    get(:http_code, '/', '--header "User-Agent: Mozilla/4.0(compatible; MSIE 7.0b; Windows NT 6.0)"').
+      should == 400
+  end
+
+  it "returns 400 if browser is MSIE 8" do
+    get(:http_code, '/', '--header "User-Agent: Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; GTB7.4; InfoPath.2; SV1; .NET CLR 3.3.69573; WOW64; en-US)"').
+      should == 400
+  end
 
   describe 'unknown rack protect' do
 
