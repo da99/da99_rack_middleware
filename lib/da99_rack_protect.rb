@@ -3,7 +3,6 @@ require 'rack/protection'
 
 class Da99_Rack_Protect
 
-  HOSTS             = []
   DA99              = self
 
   # =================================================================
@@ -63,31 +62,6 @@ class Da99_Rack_Protect
 
   class << self
 
-    def config *args
-      yield(self) if block_given?
-      case args.length
-      when 0
-        # do nothing
-
-      when 2
-
-        case args.first
-
-        when :host
-          HOSTS.concat args.last
-
-        else
-          fail "Unknown args: #{args.inspect}"
-
-        end # === case
-
-      else
-        fail "Unknown args: #{args.inspect}"
-      end # === case
-
-      self
-    end # === def config
-
     def redirect new, code = 301
       res = Rack::Response.new
       res.redirect new, code
@@ -107,6 +81,10 @@ class Da99_Rack_Protect
   end # === class self
 
   def initialize main_app
+    @configs = configs = {:hosts=>[]}
+
+    yield(self) if block_given?
+
     @app = Rack::Builder.new do
 
       use Rack::Lint
@@ -120,7 +98,12 @@ class Da99_Rack_Protect
       }
 
       Names.each { |name|
-        use Da99_Rack_Protect.const_get(name)
+        case name
+        when :Ensure_Host
+          use Da99_Rack_Protect.const_get(name), *(configs[:hosts])
+        else
+          use Da99_Rack_Protect.const_get(name)
+        end
       }
 
       if ENV['IS_DEV']
@@ -130,7 +113,20 @@ class Da99_Rack_Protect
 
       run main_app
     end
+
+    @configs[:hosts].freeze
   end
+
+  def config settings, *args
+    case settings
+    when :host
+      @configs[:hosts].concat args
+    else
+      fail "Unknown args: #{args.inspect}"
+    end # === case
+
+    self
+  end # === def config
 
   def call env
     @app.call env
