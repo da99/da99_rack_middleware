@@ -106,11 +106,6 @@ class Da99_Rack_Protect
         end
       }
 
-      if ENV['IS_DEV']
-        use Rack::CommonLogger
-        use Rack::ShowExceptions
-      end
-
       run main_app
     end
 
