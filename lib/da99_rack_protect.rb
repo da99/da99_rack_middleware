@@ -1,5 +1,9 @@
 
 require 'rack/protection'
+require 'oj'
+require 'multi_json'
+
+Oj.default_options = {:mode=>:strict}
 
 class Da99_Rack_Protect
 
